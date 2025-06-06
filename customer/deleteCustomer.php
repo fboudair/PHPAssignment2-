@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../data/db.php';
-
+// this is a function to delete a specific customer from customer table
 $customerID = $_GET['customerID'] ?? null;
 
 if (!$customerID) {

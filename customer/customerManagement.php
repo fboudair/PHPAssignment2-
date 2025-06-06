@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../data/db.php';
-
+// this page display the current customer in the customer table with button to add ir or delete it
 $query = $db->query('SELECT * FROM customers ORDER BY lastname');
 $customers = $query->fetchAll();
 ?>

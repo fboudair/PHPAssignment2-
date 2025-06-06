@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../data/db.php';
-
+// this page to edit it custmore to the table and update it
 $customerID = $_GET['customerID'] ?? null;
 $error = '';
 $success = '';

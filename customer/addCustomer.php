@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../data/db.php';
-
+// this page is allowed users to add a new customers to the customers table
 $error = '';
 $success = '';
 
