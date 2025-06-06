@@ -1,8 +1,19 @@
 <?php
 require_once __DIR__ . '/../data/db.php';
-// this page is allowed users to add a new customers to the customers table
+
 $error = '';
 $success = '';
+
+try {
+    $stmt = $db->query("SHOW CREATE TABLE customers");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $createSQL = $result['Create Table'];
+    if (strpos($createSQL, 'AUTO_INCREMENT') === false) {
+        $db->exec("ALTER TABLE customers MODIFY customerID INT NOT NULL AUTO_INCREMENT");
+    }
+} catch (PDOException $e) {
+    die("Schema adjustment failed: " . $e->getMessage());
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstname = $_POST['firstname'] ?? '';
@@ -22,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($firstname && $lastname && $email && $password && !$error) {
         try {
-            $query = "INSERT INTO customers 
-                (firstname, lastname, address, city, state, postalCode, countryCode, phone, email, password) 
-                VALUES 
+            $query = "INSERT INTO customers
+                (firstname, lastname, address, city, state, postalCode, countryCode, phone, email, password)
+                VALUES
                 (:firstname, :lastname, :address, :city, :state, :postalCode, :countryCode, :phone, :email, :password)";
-            
+           
             $stmt = $db->prepare($query);
             $stmt->execute([
                 ':firstname' => $firstname,
